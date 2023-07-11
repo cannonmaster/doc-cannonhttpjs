@@ -1,51 +1,30 @@
-# Starlight Starter Kit: Basics
+<h1 align="center" style="border-bottom: 2px solid #ebebeb;">CannonHttpJS</h1>
+<div align="center" style="margin-bottom: 10px;">
+<img src="https://img.shields.io/badge/license-MIT-green" />
+<img src="https://img.shields.io/badge/test_coverage-98%25-cyan" />
+</div>
 
-```
-npm create astro@latest -- --template starlight
-```
+CannonHttpJS is a versatile HTTP client library that provides a simple and flexible interface for making HTTP requests in both Node.js and browser environments. It offers features such as request interceptors, response interceptors, caching, and timeout handling. With CannonHttpJS, you can easily handle RESTful APIs and communicate with servers for data retrieval and sending.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
+<h2 style="border-bottom: 2px solid #ebebeb;"> Key Features</h2>
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **HTTP Methods**: Perform common HTTP methods like GET, POST, PUT, PATCH, and DELETE.
+- **Request Interceptors**: Intercept and modify request configurations before sending.
+- **Response Interceptors**: Intercept and modify response data after receiving.
+- **Caching**: Cache responses to improve performance and reduce duplicate requests.
+- **Timeout Handling**: Set a timeout duration to ensure requests do not take too long.
+- **Base URL**: Define a base URL to simplify the setting of request URLs.
+- **Default Headers**: Set default headers to be applied to all requests.
+- **Retry Mechanism**: Configure the number of retries and delay time for failed requests.
 
-## 🚀 Project Structure
+<h2 style="border-bottom: 2px solid #ebebeb;">Installation</h2>
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   ├── docs/
-│   │   └── config.ts
-│   └── env.d.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install @cannonui/httpjs@latest
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+You're now ready to start using CannonHttpJS in your projects. Enjoy the power and flexibility it offers for handling HTTP requests!
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+<h2 style="border-bottom: 2px solid #ebebeb;">License</h2>
 
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+CannonHttpJS is open-source software licensed under the [MIT License](https://opensource.org/licenses/MIT).
