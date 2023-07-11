@@ -1,0 +1,72 @@
+---
+title: formdata Request Example
+description: formdata request example docs.
+---
+
+The `isFormData` feature in CannonHttpJS will help you serialized to formdata format by CannonHttpJS automatically.This feature is useful when working with form data and file uploads.
+
+1. Set the `isFormData` flag in the request configuration:
+
+```javascript
+CannonHttpJS.post(url, { data: { name: "John Doe" }, isFormData: true });
+```
+
+When making a request, if the `isFormData` flag is set to `true`, the request payload will be treated as a `FormData` object. That is, CannonHttpJS will help you serialized to formdata format by CannonHttpJS automatically.
+
+2. If the request data as `FormData`:
+
+```javascript
+const formData = new FormData();
+formData.append("name", "John Doe");
+formData.append("age", 25);
+formData.append("avatar", fileInput.files[0]);
+```
+
+Assuming you have form data, create a new `FormData` object and append the form fields and file inputs to it.
+
+Pass the `FormData` object as the `data` parameter in the request configuration. CannonHttpJS will detect if the type of the data provided by you is an instanceof FormData. If it is, CannonHttpJS will leave it as is.
+
+With the above setup, the request payload will be treated as a `FormData` object, enabling you to handle form data and file uploads correctly.
+
+Note: This feature is specifically designed for handling `FormData` objects. If you are working with JSON data, and set `isFormData` to `true`, JSON data will be serialized to formdata format by CannonHttpJS automatically and sent as the request payload.
+
+Example usage:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+const url = "https://api.example.com/upload";
+
+const formData = new FormData();
+formData.append("name", "John Doe");
+formData.append("age", 25);
+formData.append("avatar", fileInput.files[0]);
+
+const formDataJson = {
+  name: "John Doe",
+  age: 25,
+};
+
+CannonHttpJS.post(url, { data: formData })
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+CannonHttpJS.post(url, { data: formDataJson, isFormData: true })
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In the above example, the `post` method is used to send the `FormData` object as the request payload to `'https://api.example.com/upload'`. The `FormData` object is prepared with form fields and a file input. The `isFormData` flag is set to `true` to ensure proper handling of the `FormData` object during the request.

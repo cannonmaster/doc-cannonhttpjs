@@ -1,0 +1,72 @@
+---
+title: FormData 请求示例
+description: FormData 请求示例文档。
+---
+
+在 CannonHttpJS 中，`isFormData` 功能可以帮助您将数据自动序列化为 FormData 格式。这个功能在处理表单数据和文件上传时非常有用。
+
+1. 在请求配置中设置 `isFormData` 标志：
+
+```javascript
+CannonHttpJS.post(url, { data: { name: "John Doe" }, isFormData: true });
+```
+
+当进行请求时，如果将 `isFormData` 标志设置为 `true`，则请求数据将被视为 `FormData` 对象。也就是说，CannonHttpJS 将帮助您将数据自动序列化为 FormData 格式。
+
+2. 如果请求数据是 `FormData`：
+
+```javascript
+const formData = new FormData();
+formData.append("name", "John Doe");
+formData.append("age", 25);
+formData.append("avatar", fileInput.files[0]);
+```
+
+假设您有表单数据，创建一个新的 `FormData` 对象，并将表单字段和文件输入添加到其中。
+
+将 `FormData` 对象作为请求配置中的 `data` 参数传递。CannonHttpJS 将检测您提供的数据类型是否是 FormData 的实例。如果是，CannonHttpJS 将保持不变。
+
+通过以上设置，请求数据将被视为 `FormData` 对象，从而使您能够正确处理表单数据和文件上传。
+
+注意：此功能专门用于处理 `FormData` 对象。如果您正在处理 JSON 数据，并将 `isFormData` 设置为 `true`，JSON 数据将由 CannonHttpJS 自动序列化为 FormData 格式，并作为请求数据发送。
+
+示例用法：
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+const url = "https://api.example.com/upload";
+
+const formData = new FormData();
+formData.append("name", "John Doe");
+formData.append("age", 25);
+formData.append("avatar", fileInput.files[0]);
+
+const formDataJson = {
+  name: "John Doe",
+  age: 25,
+};
+
+CannonHttpJS.post(url, { data: formData })
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+CannonHttpJS.post(url, { data: formDataJson, isFormData: true })
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+在上面的示例中，使用 `post` 方法将 `FormData` 对象作为请求数据发送到 `'https://api.example.com/upload'`。`FormData` 对象准备了表单字段和文件输入。将 `isFormData` 标志设置为 `true`，以确保在请求过程中正确处理 `FormData` 对象。

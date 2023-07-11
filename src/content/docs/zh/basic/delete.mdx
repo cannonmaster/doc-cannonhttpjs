@@ -1,0 +1,70 @@
+---
+title: Delete 请求示例
+description: Delete 请求示例文档。
+---
+
+要使用 CannonHttpJS 进行 DELETE 请求，请按照以下步骤进行操作：
+
+1. 导入 CannonHttpJS 实例：
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. 使用`delete`方法发起 DELETE 请求：
+
+```javascript
+CannonHttpJS.delete("http://localhost:3000/delete-endopoint")
+  .then((response: ResponseData) => {
+    // 处理响应
+    console.log(response.data); // 访问响应数据
+  })
+  .catch((error: Error) => {
+    // 处理错误
+    console.error(error);
+  });
+```
+
+`delete`方法接受两个参数：`url`和`config`。
+
+- `url`参数指定要发送 DELETE 请求的 URL。
+
+- `config`参数是一个可选的对象，可以包含其他的请求选项。
+
+下面是一个带有各种功能的`delete`方法的示例：
+
+```javascript
+const url = "https://api.example.com/endpoint"; // 替换为你的API端点
+
+// 可选的配置
+const config: ExtendedRequestOptions = {
+  headers: { Authorization: "Bearer token" }, // 自定义请求头
+  timeout: 5000, // 请求超时时间（毫秒）
+};
+
+CannonHttpJS.delete(url, config)
+  .then((response: ResponseData) => {
+    // 处理响应
+    console.log(response.data); // 访问响应数据
+    console.log(response.status); // 访问响应状态码
+    console.log(response.statusText); // 访问响应状态文本
+    console.log(response.headers); // 访问响应头部
+  })
+  .catch((error: Error) => {
+    // 处理错误
+    console.error(error);
+  });
+```
+
+在上面的示例中：
+
+- `config`对象中的`headers`属性允许你为请求设置自定义头部。在示例中，将`Authorization`头部设置为包含访问令牌的 Bearer token。
+
+- `config`对象中的`timeout`属性指定请求的最长等待时间（以毫秒为单位）。如果请求超时时间超过指定的时间，将抛出一个错误。
+
+你可以根据需要修改`config`对象来自定义 DELETE 请求的行为。
+
+> 注意：CannonHttpJS 目前支持客户端环境，服务器端环境正在测试阶段，即将提供支持。

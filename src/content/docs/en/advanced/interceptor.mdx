@@ -1,0 +1,82 @@
+---
+title: Interceptors Example
+description: Interceptors example docs.
+---
+
+To use request/response interceptors with CannonHttpJS is identical, follow the steps below:
+
+1. Define a request interceptor function:
+
+```javascript
+function requestInterceptor(config) {
+  // Modify the request configuration as needed
+  // You can add headers, modify data, or perform other operations
+
+  return config; // Return the modified request configuration
+}
+```
+
+2. Add the request interceptor to CannonHttpJS:
+
+```javascript
+CannonHttpJS.addRequestInterceptor(requestInterceptor);
+```
+
+The `addRequestInterceptor` method allows you to add a request interceptor function to CannonHttpJS. The request interceptor function will be called before each request is sent, allowing you to modify the request configuration.
+
+3. Clear request interceptors:
+
+```javascript
+CannonHttpJS.clearRequestInterceptor(interceptor);
+```
+
+The `clearRequestInterceptor` method allows you to remove a specific request interceptor function. If no `interceptor` parameter is provided, all request interceptors will be cleared.
+
+4. Example usage:
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// Define a request interceptor function
+function requestInterceptor(config) {
+  // Add custom headers
+  config.headers["Authorization"] = "Bearer token";
+
+  // Modify data
+  if (config.data) {
+    config.data = { ...config.data, timestamp: Date.now() };
+  }
+
+  return config;
+}
+
+// Add the request interceptor
+CannonHttpJS.addRequestInterceptor(requestInterceptor);
+
+// Make a request
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Clear the request interceptor
+CannonHttpJS.clearRequestInterceptor(requestInterceptor);
+```
+
+In the above example:
+
+- The `requestInterceptor` function is defined as a request interceptor. It modifies the request configuration by adding a custom header and appending a timestamp to the data payload.
+
+- The `addRequestInterceptor` method is used to add the `requestInterceptor` function to CannonHttpJS. This interceptor will be executed before each request is sent.
+
+- The `get` request is made to `'https://api.example.com/data'`. Before the request is sent, the request interceptor function is executed, modifying the request configuration.
+
+- The request is made with the modified configuration, and the response is handled accordingly.
+
+- The `clearRequestInterceptor` method is used to remove the `requestInterceptor` function from CannonHttpJS, if needed.
+
+Note: Request interceptors provide a way to modify the request configuration globally for all requests made with CannonHttpJS. You can add multiple interceptors, and they will be executed in the order they were added. They can be used for various purposes such as adding authentication headers, modifying data, or logging requests.

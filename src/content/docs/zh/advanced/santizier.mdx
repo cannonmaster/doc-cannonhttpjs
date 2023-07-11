@@ -1,0 +1,87 @@
+---
+title: santizier示例
+description: santizier示例文档。
+---
+
+要在 CannonHttpJS 中使用数据清理功能，请按照以下步骤进行操作：
+
+1. 定义一个响应清理函数：
+
+```javascript
+function responseSanitizer(data) {
+  // 根据需要清理响应数据
+  // 您可以修改、过滤或清理数据
+
+  return data; // 返回清理后的响应数据
+}
+```
+
+2. 将响应清理器添加到 CannonHttpJS 中：
+
+```javascript
+CannonHttpJS.addResponseSanitizer(responseSanitizer);
+```
+
+`addResponseSanitizer` 方法允许您向 CannonHttpJS 添加一个响应清理函数。该响应清理函数将在每次成功接收到响应后调用，允许您清理或修改响应数据。
+
+3. 清除响应清理器：
+
+```javascript
+CannonHttpJS.clearResponseSanitizer(sanitizer);
+```
+
+`clearResponseSanitizer` 方法允许您删除特定的响应清理函数。如果不提供 `sanitizer` 参数，则会清除所有的响应清理函数。
+
+4. 示例用法：
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+// 定义响应清理函数
+function responseSanitizer(data) {
+  // 清理响应数据
+  if (Array.isArray(data)) {
+    // 从数组中过滤掉某些项
+    data = data.filter((item) => item.isValid);
+  }
+  // 修改特定属性
+  if (data.hasOwnProperty("name")) {
+    data.name = data.name.toUpperCase();
+  }
+
+  return data;
+}
+
+// 添加响应清理器
+CannonHttpJS.addResponseSanitizer(responseSanitizer);
+
+// 发起请求
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // 处理响应
+    console.log(response.data); // 清理后的响应数据
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// 清除响应清理器
+CannonHttpJS.clearResponseSanitizer(responseSanitizer);
+```
+
+在上述示例中：
+
+- `responseSanitizer` 函数被定义为一个响应清理器。它对响应数据进行清理，例如从数组中过滤掉某些项或修改特定属性。
+
+- 使用 `addResponseSanitizer` 方法将 `responseSanitizer` 函数添加到 CannonHttpJS 中。该清理器将在每次成功接收到响应后执行。
+
+- 发起 `get` 请求到 `'https://api.example.com/data'`。在接收到响应后，将执行响应清理器函数，根据需要对响应数据进行清理。
+
+- 清理后的响应数据可用于进一步处理。
+
+- 如果需要，可以使用 `clearResponseSanitizer` 方法从 CannonHttpJS 中删除 `responseSanitizer` 函数。
+
+注意：响应清理器允许您在使用 CannonHttpJS 进行所有成功的响应时全局清理或修改响应数据。您可以添加多个清理器，并按照添加的顺序执行。响应清理器可用于清理敏感数据、执行转换操作或将业务逻辑应用于响应数据。

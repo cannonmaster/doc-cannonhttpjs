@@ -1,0 +1,55 @@
+---
+title: timeout Example
+description: timeout Example
+---
+
+To use the timeout feature in CannonHttpJS, follow the steps below:
+
+1. Set the timeout value:
+
+```javascript
+// Set the timeout value in milliseconds
+const timeoutValue = 5000; // 5 seconds
+
+// Example: Set the timeout value for a specific request
+CannonHttpJS.get("https://api.example.com/data", { timeout: timeoutValue })
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Example: Set the default timeout value for all requests
+CannonHttpJS.setDefaultHeaders({ timeout: timeoutValue });
+```
+
+The `timeout` option allows you to specify the maximum time to wait for a request to complete before considering it timed out. The value is provided in milliseconds. You can set the timeout value for a specific request or set a default timeout value for all requests.
+
+2. Handling a timeout error:
+
+When a request exceeds the specified timeout duration, CannonHttpJS will throw a timeout error. You can handle this error in a `catch` block as shown in the example above.
+
+```javascript
+CannonHttpJS.get("https://api.example.com/data", { timeout: timeoutValue })
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    if (/Request timed out after \d+ms/.test(error.message)) {
+      // Handle timeout error
+      console.error("The request timed out.");
+    } else {
+      // Handle other errors
+      console.error(error);
+    }
+  });
+```
+
+In the `catch` block, you can check if the error message is like `"Request timed out"` to specifically handle timeout errors. You can customize the error handling based on your application's requirements.
+
+Note: The timeout duration starts from the moment the request is sent and includes the time taken for DNS resolution, establishing a connection, sending the request, waiting for the server response, and receiving the response. If the timeout occurs, the request will be aborted.
+
+The timeout feature is useful for preventing requests from waiting indefinitely and allows your application to handle cases where a response takes longer than expected.

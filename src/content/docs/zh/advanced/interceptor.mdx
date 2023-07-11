@@ -1,0 +1,82 @@
+---
+title: 拦截器示例
+description: 拦截器示例文档。
+---
+
+要使用 CannonHttpJS 的请求/响应拦截器，按照以下步骤操作：
+
+1. 定义一个请求拦截器函数：
+
+```javascript
+function requestInterceptor(config) {
+  // 根据需要修改请求配置
+  // 您可以添加请求头、修改数据或执行其他操作
+
+  return config; // 返回修改后的请求配置
+}
+```
+
+2. 将请求拦截器添加到 CannonHttpJS：
+
+```javascript
+CannonHttpJS.addRequestInterceptor(requestInterceptor);
+```
+
+`addRequestInterceptor` 方法允许您将请求拦截器函数添加到 CannonHttpJS 中。在发送每个请求之前，将调用请求拦截器函数，以便您可以修改请求配置。
+
+3. 清除请求拦截器：
+
+```javascript
+CannonHttpJS.clearRequestInterceptor(interceptor);
+```
+
+`clearRequestInterceptor` 方法允许您移除指定的请求拦截器函数。如果不提供 `interceptor` 参数，则将清除所有请求拦截器。
+
+4. 示例用法：
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// 定义一个请求拦截器函数
+function requestInterceptor(config) {
+  // 添加自定义请求头
+  config.headers["Authorization"] = "Bearer token";
+
+  // 修改数据
+  if (config.data) {
+    config.data = { ...config.data, timestamp: Date.now() };
+  }
+
+  return config;
+}
+
+// 添加请求拦截器
+CannonHttpJS.addRequestInterceptor(requestInterceptor);
+
+// 发起请求
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// 清除请求拦截器
+CannonHttpJS.clearRequestInterceptor(requestInterceptor);
+```
+
+在上面的示例中：
+
+- `requestInterceptor` 函数被定义为请求拦截器。它通过添加自定义请求头和在数据负载中附加时间戳来修改请求配置。
+
+- 使用 `addRequestInterceptor` 方法将 `requestInterceptor` 函数添加到 CannonHttpJS 中。该拦截器将在每个请求发送之前执行。
+
+- 发起 `get` 请求到 `'https://api.example.com/data'`。在发送请求之前，将执行请求拦截器函数，修改请求配置。
+
+- 使用修改后的配置进行请求，并根据需要处理响应。
+
+- 如果需要，使用 `clearRequestInterceptor` 方法从 CannonHttpJS 中移除 `requestInterceptor` 函数。
+
+注意：请求拦截器提供了一种全局修改使用 CannonHttpJS 发起的所有请求的请求配置的方式。您可以添加多个拦截器，它们将按照添加的顺序依次执行。拦截器可用于各种目的，例如添加身份验证头、修改数据或记录请求等。

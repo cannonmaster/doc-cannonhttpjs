@@ -1,0 +1,51 @@
+---
+title: Default Header Example
+description: Default Header example docs.
+---
+
+To use default headers with CannonHttpJS, follow the steps below:
+
+1. Set default headers:
+
+```javascript
+CannonHttpJS.setDefaultHeaders(headers);
+```
+
+The `setDefaultHeaders` method allows you to set default headers that will be included in every request made with CannonHttpJS. The `headers` parameter should be an object containing the key-value pairs of the headers.
+
+2. Example usage:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+// Set default headers
+CannonHttpJS.setDefaultHeaders({
+  "Content-Type": "application/json",
+  Authorization: "Bearer token",
+});
+
+// Make a request
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+In the above example:
+
+- The `setDefaultHeaders` method is used to set default headers for all requests made with CannonHttpJS. The example sets two headers: `Content-Type` with the value `'application/json'` and `Authorization` with the value `'Bearer token'`.
+
+- The `get` request is made to `'https://api.example.com/data'`. The default headers set previously will be included in the request.
+
+- The response is handled accordingly.
+
+Note: Default headers are applied to all requests made with CannonHttpJS. You can set headers such as authorization tokens, content types, or any other headers required by your API. The default headers can be overridden or supplemented by adding headers to the individual request configurations if needed.
+
+Ensure that the header names and values you set are appropriate for your specific API requirements.

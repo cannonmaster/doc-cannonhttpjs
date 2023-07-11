@@ -1,0 +1,74 @@
+---
+title: Patch Request Example
+description: Patch request example docs.
+---
+
+To use the `patch` method for making a PATCH request with CannonHttpJS, follow the steps below:
+
+1. Import the CannonHttpJS instance:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. Make a PATCH request using the `patch` method:
+
+```javascript
+CannonHttpJS.patch("http://localhost:3000/patch-endopoint", {})
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+The `patch` method accepts three parameters: `url` and `config`.
+
+- The `url` parameter specifies the URL to which the PATCH request will be made.
+
+- The `config` parameter is an optional object that can contain additional request options.
+
+Here is an example of how to use the `patch` method with various features:
+
+```javascript
+const url = "https://api.example.com/endpoint"; // Replace with your API endpoint
+
+
+// Optional configuration
+const config: ExtendedRequestOptions = {
+  headers: { "Content-Type": "application/json" }, // Custom headers
+  data: { key: "value" }; // Request payload data
+  timeout: 5000, // Request timeout in milliseconds
+};
+
+CannonHttpJS.patch(url, config)
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+    console.log(response.status); // Access the response status code
+    console.log(response.statusText); // Access the response status text
+    console.log(response.headers); // Access the response headers
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+In the above example:
+
+- The `data` represents the payload data to be sent with the PATCH request. It can be an object, which will be automatically converted to JSON, or a string.
+
+- The `headers` property in the `config` object allows you to set custom headers for the request. In the example, it sets the `Content-Type` header to `application/json`.
+
+- The `timeout` property in the `config` object specifies the maximum time in milliseconds to wait for the request to complete. If the request takes longer than the specified timeout, an error will be thrown.
+
+You can customize the behavior of the PATCH request by modifying the `config` object according to your requirements.
+
+> Note: CannonHttpJS currently supports client side environemnt, and the server side environment (node) is currently under testing phase and will be available very soon.

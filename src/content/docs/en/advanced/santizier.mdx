@@ -1,0 +1,87 @@
+---
+title: sanitization Example
+description: sanitization Example
+---
+
+To use data sanitization with CannonHttpJS, follow the steps below:
+
+1. Define a response sanitizer function:
+
+```javascript
+function responseSanitizer(data) {
+  // Sanitize the response data as needed
+  // You can modify, filter, or sanitize the data
+
+  return data; // Return the sanitized response data
+}
+```
+
+2. Add the response sanitizer to CannonHttpJS:
+
+```javascript
+CannonHttpJS.addResponseSanitizer(responseSanitizer);
+```
+
+The `addResponseSanitizer` method allows you to add a response sanitizer function to CannonHttpJS. The response sanitizer function will be called after each successful response is received, allowing you to sanitize or modify the response data.
+
+3. Clear response sanitizers:
+
+```javascript
+CannonHttpJS.clearResponseSanitizer(sanitizer);
+```
+
+The `clearResponseSanitizer` method allows you to remove a specific response sanitizer function. If no `sanitizer` parameter is provided, all response sanitizers will be cleared.
+
+4. Example usage:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+// Define a response sanitizer function
+function responseSanitizer(data) {
+  // Sanitize the response data
+  if (Array.isArray(data)) {
+    // Filter out certain items from an array
+    data = data.filter((item) => item.isValid);
+  }
+  // Modify specific properties
+  if (data.hasOwnProperty("name")) {
+    data.name = data.name.toUpperCase();
+  }
+
+  return data;
+}
+
+// Add the response sanitizer
+CannonHttpJS.addResponseSanitizer(responseSanitizer);
+
+// Make a request
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // Handle the response
+    console.log(response.data); // Sanitized response data
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Clear the response sanitizer
+CannonHttpJS.clearResponseSanitizer(responseSanitizer);
+```
+
+In the above example:
+
+- The `responseSanitizer` function is defined as a response sanitizer. It performs sanitization on the response data, such as filtering out certain items from an array or modifying specific properties.
+
+- The `addResponseSanitizer` method is used to add the `responseSanitizer` function to CannonHttpJS. This sanitizer will be executed after each successful response is received.
+
+- The `get` request is made to `'https://api.example.com/data'`. After receiving the response, the response sanitizer function is executed, sanitizing the response data if necessary.
+
+- The sanitized response data is then accessible for further handling.
+
+- The `clearResponseSanitizer` method is used to remove the `responseSanitizer` function from CannonHttpJS, if needed.
+
+Note: Response sanitizers allow you to sanitize or modify the response data globally for all successful responses made with CannonHttpJS. You can add multiple sanitizers, and they will be executed in the order they were added. Response sanitizers can be used to sanitize sensitive data, perform transformations, or apply business logic to the response data.

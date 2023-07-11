@@ -1,0 +1,55 @@
+---
+title: 超时示例
+description: 超时示例
+---
+
+要在 CannonHttpJS 中使用超时功能，请按照以下步骤进行操作：
+
+1. 设置超时时间：
+
+```javascript
+// 以毫秒为单位设置超时时间
+const timeoutValue = 5000; // 5秒
+
+// 示例：为特定请求设置超时时间
+CannonHttpJS.get("https://api.example.com/data", { timeout: timeoutValue })
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// 示例：为所有请求设置默认超时时间
+CannonHttpJS.setDefaultHeaders({ timeout: timeoutValue });
+```
+
+`timeout`选项允许您指定在请求完成之前最长等待的时间，超过此时间将视为超时。超时值以毫秒为单位提供。您可以为特定请求设置超时值，也可以为所有请求设置默认超时值。
+
+2. 处理超时错误：
+
+当请求超过指定的超时持续时间时，CannonHttpJS 将抛出超时错误。您可以在`catch`块中处理此错误，如上例所示。
+
+```javascript
+CannonHttpJS.get("https://api.example.com/data", { timeout: timeoutValue })
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    if (/Request timed out after \d+ms/.test(error.message)) {
+      // 处理超时错误
+      console.error("请求超时。");
+    } else {
+      // 处理其他错误
+      console.error(error);
+    }
+  });
+```
+
+在`catch`块中，您可以检查错误消息是否类似于`"Request timed out"`，以特别处理超时错误。根据应用程序的需求，您可以自定义错误处理方式。
+
+注意：超时持续时间从发送请求的时刻开始计算，包括 DNS 解析、建立连接、发送请求、等待服务器响应和接收响应的时间。如果超时发生，请求将被中止。
+
+超时功能对于防止请求无限期等待非常有用，并使您的应用程序能够处理响应时间超出预期的情况。

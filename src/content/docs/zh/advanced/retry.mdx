@@ -1,0 +1,33 @@
+---
+title: Retry 请求示例文档
+description: retry 请求示例文档.
+---
+
+以下是如何在 CannonHttpJS 中使用重试机制的示例代码：
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// 设置最大重试次数
+CannonHttpJS.setRetry(3);
+
+// 发起请求
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+`setRetry` 方法允许你设置 CannonHttpJS 中的请求最大重试次数。`maxRetry` 参数指定了期望的最大重试次数。
+
+在上面的示例中：
+
+- `setRetry` 方法将最大重试次数设置为 3。这意味着如果请求失败，它将在返回错误之前最多重试 3 次。
+
+- `get` 请求发送到 `'https://api.example.com/data'`。如果请求失败，CannonHttpJS 将根据配置的最大重试次数和延迟计算自动重试请求。
+
+重试功能在出现临时网络问题或服务器错误的情况下非常有用。它有助于提高应用程序的稳健性，并在面对间歇性故障时提供容错能力。

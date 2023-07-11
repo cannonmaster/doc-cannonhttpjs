@@ -1,0 +1,70 @@
+---
+title: Delete Request Example
+description: Delete request example docs.
+---
+
+To use the `delete` method for making a DELETE request with CannonHttpJS, follow the steps below:
+
+1. Import the CannonHttpJS instance:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. Make a DELETE request using the `delete` method:
+
+```javascript
+CannonHttpJS.delete("http://localhost:3000/delete-endopoint")
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+The `delete` method accepts two parameters: `url` and `config`.
+
+- The `url` parameter specifies the URL to which the DELETE request will be made.
+
+- The `config` parameter is an optional object that can contain additional request options.
+
+Here is an example of how to use the `delete` method with various features:
+
+```javascript
+const url = "https://api.example.com/endpoint"; // Replace with your API endpoint
+
+// Optional configuration
+const config: ExtendedRequestOptions = {
+  headers: { Authorization: "Bearer token" }, // Custom headers
+  timeout: 5000, // Request timeout in milliseconds
+};
+
+CannonHttpJS.delete(url, config)
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+    console.log(response.status); // Access the response status code
+    console.log(response.statusText); // Access the response status text
+    console.log(response.headers); // Access the response headers
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+In the above example:
+
+- The `headers` property in the `config` object allows you to set custom headers for the request. In the example, it sets the `Authorization` header to include a bearer token.
+
+- The `timeout` property in the `config` object specifies the maximum time in milliseconds to wait for the request to complete. If the request takes longer than the specified timeout, an error will be thrown.
+
+You can customize the behavior of the DELETE request by modifying the `config` object according to your requirements.
+
+> Note: CannonHttpJS currently supports client side environemnt, and the server side environment is currently under testing phase and will be available very soon.

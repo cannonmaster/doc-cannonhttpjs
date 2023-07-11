@@ -1,0 +1,78 @@
+---
+title: Post Request Example
+description: post request example docs.
+---
+
+To use the `post` method for making a POST request with CannonHttpJS, follow the steps below:
+
+1. Import the CannonHttpJS instance:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. Make a POST request using the `post` method:
+
+```javascript
+CannonHttpJS.post("http://localhost:3000/post-endopoint", {})
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+The `post` method accepts two parameters: `url` and `config`.
+
+- The `url` parameter specifies the URL to which the POST request will be made.
+
+- The `config` parameter is an optional object that can contain additional request options.
+
+Here is an example of how to use the `post` method with various features:
+
+```javascript
+const url = "https://api.example.com/endpoint"; // Replace with your API endpoint
+
+// Optional configuration
+const config: ExtendedRequestOptions = {
+  data: { foo: "bar" }, // Request payload data
+  headers: { "Content-Type": "application/json" }, // Custom headers
+  timeout: 5000, // Request timeout in milliseconds
+  isFormData: false, // Flag to indicate if it's a form POST request
+};
+
+CannonHttpJS.post(url, config)
+  .then((response: ResponseData) => {
+    // Handle the response
+    console.log(response.data); // Access the response data
+    console.log(response.status); // Access the response status code
+    console.log(response.statusText); // Access the response status text
+    console.log(response.headers); // Access the response headers
+  })
+  .catch((error: Error) => {
+    // Handle any errors
+    console.error(error);
+  });
+```
+
+In the above example:
+
+- The `params` property in the `config` object allows you to include URL parameters. For example, `{ params: { key: 'value' } }` will result in a URL like `https://api.example.com/endpoint?key=value`.
+
+- The `data` property in the `config` object represents the payload data to be sent with the POST request. It can be an object, which will be automatically converted to JSON. If it is a json object string, then it will leave it as is.
+
+- The `headers` property in the `config` object allows you to set custom headers for the request. In the example, it sets the `Content-Type` header to `application/json`. However, CannonHttpJS will set this header for you automatically as long as the `isFormData` is set to false. By the way, `isFormData` is an optional config option and CannonHttpJS will add `isFormData` automatically even you do not provide one. The default value of the `isFormData` is false.
+
+- The `timeout` property in the `config` object specifies the maximum time in milliseconds to wait for the request to complete. If the request takes longer than the specified timeout, an error will be thrown.
+
+- The `isFormData` property in the `config` object is a flag to indicate whether the request should be sent as a form POST request. If `true`, the payload data will be treated as form data and will be serialized accordingly by CannonHttpJS automatically.
+
+You can customize the behavior of the POST request by modifying the `config` object according to your requirements.
+
+> Note: CannonHttpJS currently supports client side environemnt, and the server side environment (node) is currently under testing phase and will be available very soon.

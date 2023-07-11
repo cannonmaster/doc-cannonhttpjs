@@ -1,0 +1,70 @@
+---
+title: GET请求示例
+description: GET请求示例文档。
+---
+
+要使用 CannonHttpJS 进行 GET 请求，请按照以下步骤进行操作：
+
+1. 使用`get`方法发起 GET 请求：
+
+```javascript
+import CannonHttpJS from "@cannonui/httpjs";
+
+CannonHttpJS.setBaseUrl("http://localhost:3000");
+
+CannonHttpJS.get("/get-endpoint", {})
+  .then((response: ResponseData) => {
+    // 处理响应
+    console.log(response.data); // 访问响应数据
+  })
+  .catch((error: Error) => {
+    // 处理错误
+    console.error(error);
+  });
+```
+
+`get`方法接受两个参数：`url`和`config`。
+
+- `url`参数指定要发送 GET 请求的 URL。
+
+- 示例中使用`setBaseUrl`方法设置了基本 URL，用于为所有后续请求添加前缀。然而，此步骤是可选的。
+
+- `config`参数是一个对象，可以包含其他的请求选项。由于 CannonHttpJS 基于 fetch，因此可以在此处使用任何有效的 fetch 配置选项。
+
+下面是一个带有各种功能的`get`方法的示例：
+
+```javascript
+const url = "https://api.example.com/endpoint"; // 替换为你的API端点
+
+// 可选的配置
+const config: ExtendedRequestOptions = {
+  params: { key: "value" }, // 可选的URL参数
+  headers: { Authorization: "Bearer token" }, // 自定义请求头
+  timeout: 5000, // 请求超时时间（毫秒）
+};
+
+CannonHttpJS.get(url, config)
+  .then((response: ResponseData) => {
+    // 处理响应
+    console.log(response.data); // 访问响应数据
+    console.log(response.status); // 访问响应状态码
+    console.log(response.statusText); // 访问响应状态文本
+    console.log(response.headers); // 访问响应头部
+  })
+  .catch((error: Error) => {
+    // 处理错误
+    console.error(error);
+  });
+```
+
+在上面的示例中：
+
+- `config`对象中的`params`属性允许你包含 URL 参数。例如，`{ params: { key: 'value' } }`将生成类似于`https://api.example.com/endpoint?key=value`的 URL。
+
+- `config`对象中的`headers`属性允许你为请求设置自定义头部。在示例中，将`Authorization`头部设置为包含 Bearer 令牌。
+
+- `config`对象中的`timeout`属性指定请求的最长等待时间（以毫秒为单位）。如果请求超时时间超过指定的时间，将抛出一个错误。
+
+你可以根据需要修改`config`对象来自定义 GET 请求的行为。
+
+> 注意：CannonHttpJS 目前支持客户端环境，服务器端环境（Node.js）目前正在测试阶段，即将提供支持。

@@ -1,0 +1,33 @@
+---
+title: Retry Request Example
+description: retry request example docs.
+---
+
+Here's an example of how to use the retry mechanism with CannonHttpJS:
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// Set the maximum number of retries
+CannonHttpJS.setRetry(3);
+
+// Make a request
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+The `setRetry` method allows you to set the maximum number of retries for failed requests made with CannonHttpJS. The `maxRetry` parameter specifies the desired maximum number of retries.
+
+In the above example:
+
+- The `setRetry` method sets the maximum number of retries to 3. This means that if a request fails, it will be retried up to 3 times before returning an error.
+
+- The `get` request is made to `'https://api.example.com/data'`. If the request fails, CannonHttpJS will automatically retry the request according to the configured maximum number of retries and delay calculation.
+
+Retry functionality can be useful in scenarios where temporary network issues or server errors may occur. It helps improve the robustness of your application and provides resilience against intermittent failures.

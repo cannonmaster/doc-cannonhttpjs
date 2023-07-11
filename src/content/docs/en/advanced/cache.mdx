@@ -1,0 +1,84 @@
+---
+title: Cache Request Example
+description: Cache request example docs.
+---
+
+To use the caching feature with CannonHttpJS, follow the steps below:
+
+1. Set the cache size:
+
+```javascript
+CannonHttpJS.setCacheSize(cacheSize);
+```
+
+The `setCacheSize` method allows you to set the maximum number of cached responses to be stored. This helps manage the cache size and evict older entries when the cache limit is reached. The `cacheSize` parameter specifies the desired cache size.
+
+2. Set the cache time:
+
+```javascript
+CannonHttpJS.setCacheTime(cacheTime);
+```
+
+The `setCacheTime` method allows you to set the default cache time for responses in milliseconds. This determines how long the responses will be stored in the cache before they are considered expired. The `cacheTime` parameter specifies the cache time duration.
+
+3. Invalidate the cache:
+
+```javascript
+CannonHttpJS.invalidateCache(url);
+```
+
+The `invalidateCache` method allows you to manually invalidate the cache for a specific URL or clear the entire cache. If the `url` parameter is provided, only the cache entry associated with that URL will be removed. If no URL is provided, the entire cache will be cleared.
+
+By default, only the `get` method caches the responses if caching is enabled. When a subsequent GET request is made to the same URL, the cached response will be returned if it is still valid based on the cache time.
+
+5. Example usage:
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// Set cache size and cache time
+CannonHttpJS.setCacheSize(10); // Set the cache size to 10
+CannonHttpJS.setCacheTime(60000); // Set the default cache time to 1 minute (60000 milliseconds)
+
+// Make a GET request
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+
+    // Make the same request again
+    CannonHttpJS.get("https://api.example.com/data")
+      .then((cachedResponse) => {
+        // Handle the cached response
+        console.log(cachedResponse.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// Invalidate the cache for a specific URL
+CannonHttpJS.invalidateCache("https://api.example.com/data");
+
+// Clear the entire cache
+CannonHttpJS.invalidateCache();
+```
+
+In the above example:
+
+- The `setCacheSize` method sets the cache size to 10, meaning that only the 10 most recent responses will be stored in the cache.
+
+- The `setCacheTime` method sets the default cache time to 1 minute (60000 milliseconds), which means that the responses will be considered valid for 1 minute before they are considered expired.
+
+- The first `get` request retrieves the data from the API and caches the response.
+
+- The second `get` request to the same URL retrieves the response from the cache instead of making a new request to the server.
+
+- The `invalidateCache` method is used to manually invalidate the cache for a specific URL (`'https://api.example.com/data'`) or clear the entire cache.
+
+Note: Caching is only applicable to GET requests. Other request methods (e.g., POST, PATCH, DELETE) do not utilize caching by default.
+
+> Note: CannonHttpJS currently supports client side environemnt, and the server side environment (node) is currently under testing phase and will be available very soon.

@@ -1,0 +1,51 @@
+---
+title: 默认请求头示例
+description: 默认请求头示例文档。
+---
+
+要使用 CannonHttpJS 的默认请求头功能，请按照以下步骤进行操作：
+
+1. 设置默认请求头：
+
+```javascript
+CannonHttpJS.setDefaultHeaders(headers);
+```
+
+`setDefaultHeaders` 方法允许您设置默认请求头，这些请求头将包含在使用 CannonHttpJS 发起的每个请求中。`headers` 参数应为一个包含请求头键值对的对象。
+
+2. 示例用法：
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+
+// 设置默认请求头
+CannonHttpJS.setDefaultHeaders({
+  "Content-Type": "application/json",
+  Authorization: "Bearer token",
+});
+
+// 发起请求
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+在上面的示例中：
+
+- 使用 `setDefaultHeaders` 方法设置了 CannonHttpJS 的默认请求头。示例中设置了两个请求头：`Content-Type` 的值为 `'application/json'`，`Authorization` 的值为 `'Bearer token'`。
+
+- 发起了一个 `get` 请求到 `'https://api.example.com/data'`。之前设置的默认请求头将包含在该请求中。
+
+- 根据需要处理响应。
+
+注意：默认请求头将应用于使用 CannonHttpJS 发起的所有请求。您可以设置授权令牌、内容类型或您的 API 需要的任何其他请求头。如果需要，可以通过向单个请求的配置中添加请求头来覆盖或补充默认请求头。
+
+请确保您设置的请求头名称和值符合您特定的 API 要求。

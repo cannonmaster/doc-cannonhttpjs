@@ -1,0 +1,84 @@
+---
+title: 缓存请求示例
+description: 缓存请求示例文档。
+---
+
+要使用 CannonHttpJS 的缓存功能，请按照以下步骤操作：
+
+1. 设置缓存大小：
+
+```javascript
+CannonHttpJS.setCacheSize(cacheSize);
+```
+
+`setCacheSize` 方法允许您设置最大缓存响应的数量。这有助于管理缓存大小，在达到缓存限制时清除较旧的条目。`cacheSize` 参数指定所需的缓存大小。
+
+2. 设置缓存时间：
+
+```javascript
+CannonHttpJS.setCacheTime(cacheTime);
+```
+
+`setCacheTime` 方法允许您设置响应的默认缓存时间（以毫秒为单位）。这决定了在将响应视为过期之前，响应将在缓存中存储多长时间。`cacheTime` 参数指定缓存时间的持续时间。
+
+3. 使缓存无效：
+
+```javascript
+CannonHttpJS.invalidateCache(url);
+```
+
+`invalidateCache` 方法允许您手动使特定 URL 的缓存无效或清除整个缓存。如果提供了 `url` 参数，将只删除与该 URL 相关联的缓存条目。如果未提供 URL，则会清除整个缓存。
+
+默认情况下，仅当启用缓存时，`get` 方法才会缓存响应。当对同一 URL 进行后续的 GET 请求时，如果缓存仍然有效（根据缓存时间判断），则会返回缓存的响应。
+
+5. 示例用法：
+
+```javascript
+import CannonHttpJS from "./CannonHttpJS";
+
+// 设置缓存大小和缓存时间
+CannonHttpJS.setCacheSize(10); // 将缓存大小设置为 10
+CannonHttpJS.setCacheTime(60000); // 将默认缓存时间设置为 1 分钟（60000 毫秒）
+
+// 发起 GET 请求
+CannonHttpJS.get("https://api.example.com/data")
+  .then((response) => {
+    // 处理响应
+    console.log(response.data);
+
+    // 再次发起相同的请求
+    CannonHttpJS.get("https://api.example.com/data")
+      .then((cachedResponse) => {
+        // 处理缓存的响应
+        console.log(cachedResponse.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+// 使特定 URL 的缓存无效
+CannonHttpJS.invalidateCache("https://api.example.com/data");
+
+// 清除整个缓存
+CannonHttpJS.invalidateCache();
+```
+
+在上面的示例中：
+
+- `setCacheSize` 方法将缓存大小设置为 10，这意味着只有最近的 10 个响应将存储在缓存中。
+
+- `setCacheTime` 方法将默认缓存时间设置为 1 分钟（60000 毫秒），这意味着在被视为过期之前，响应将被视为有效的时间为 1 分钟。
+
+- 第一个 `get` 请求从 API 检索数据并将响应缓存起来。
+
+- 对同一 URL 的第二个 `get` 请求从缓存中检索响应，而不是向服务器发起新的请求。
+
+- `invalidateCache` 方法用于手动使特定 URL (`'https://api.example.com/data'`) 的缓存无效，或清除整个缓存。
+
+缓存仅适用于 GET 请求。其他请求方法（例如 POST、PATCH、DELETE）不使用缓存。
+
+> 注意：CannonHttpJS 目前支持客户端环境，服务器端环境（Node.js）目前正在测试阶段，很快将提供支持。
