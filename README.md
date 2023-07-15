@@ -6,6 +6,8 @@
 
 CannonHttpJS is a versatile HTTP client library that provides a simple and flexible interface for making HTTP requests in both Node.js and browser environments. It offers features such as request interceptors, response interceptors, caching, and timeout handling. With CannonHttpJS, you can easily handle RESTful APIs and communicate with servers for data retrieval and sending.
 
+<a href="https://cannonmaster.github.io/doc-cannonhttpjs/">Documentation</a>
+
 <h2 style="border-bottom: 2px solid #ebebeb;"> Key Features</h2>
 
 - **HTTP Methods**: Perform common HTTP methods like GET, POST, PUT, PATCH, and DELETE.

@@ -6,6 +6,8 @@
 
 CannonHttpJS 是一个多功能的 HTTP 客户端库，为 Node.js 和浏览器环境提供了一个简单而灵活的接口，用于发起 HTTP 请求。它提供了请求拦截器、响应拦截器、缓存、超时处理等功能。使用 CannonHttpJS，您可以轻松处理 RESTful API，并与服务器进行数据的获取和发送。
 
+<a href="https://cannonmaster.github.io/doc-cannonhttpjs/zh/">使用文档</a>
+
 ## 功能特点
 
 - **HTTP 方法**: 执行常见的 GET、POST、PUT、PATCH 和 DELETE 等 HTTP 方法。
