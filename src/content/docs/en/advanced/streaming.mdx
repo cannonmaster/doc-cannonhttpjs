@@ -1,0 +1,47 @@
+---
+title: streaming Request Example
+description: streaming request example docs.
+---
+
+To use the `CannonHttpJS` library with streaming, you can follow these steps:
+
+1. Import the `CannonHttpJS` library:
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. Use the `stream` method to make a streaming request:
+
+```javascript
+const onDataChunk = (chunk: any) => {
+  // Process each chunk of data as it arrives
+  console.log(chunk);
+};
+
+(async () => {
+  try {
+    const response: ResponseData<unknown> = await CannonHttpJS.stream(
+      "/streaming", // Replace with the URL of your streaming endpoint
+      {
+
+      } as ExtendedRequestOptions<unknown>,
+      onDataChunk
+    );
+
+    // Handle the entire response after all chunks are received (optional)
+    console.log("Streaming response complete:", response.data);
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+})();
+```
+
+Please note that the `stream` method from `CannonHttpJS` will handle the streaming response and call the `onDataChunk` callback for each data chunk received. You can process the data in the `onDataChunk` callback or use the entire response data after all chunks are received, as shown in the example.
+
+Make sure to replace `"/streaming"` with the actual URL of your streaming endpoint. Also, you can add more configuration options as needed.
+
+Remember to handle any errors that might occur during the streaming process and adjust the example according to your specific use case.

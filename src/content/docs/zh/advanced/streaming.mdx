@@ -1,0 +1,47 @@
+---
+title: 流式请求示例
+description: 流式请求示例文档。
+---
+
+要使用`CannonHttpJS`库进行流式请求，可以按照以下步骤进行操作：
+
+1. 导入`CannonHttpJS`库：
+
+```javascript
+import CannonHttpJS, {
+  ResponseData,
+  ExtendedRequestOptions,
+} from "@cannonui/httpjs";
+```
+
+2. 使用`stream`方法发起流式请求：
+
+```javascript
+const onDataChunk = (chunk: any) => {
+  // 处理每个数据块到达时的数据
+  console.log(chunk);
+};
+
+(async () => {
+  try {
+    const response: ResponseData<unknown> = await CannonHttpJS.stream(
+      "/streaming", // 用实际的流式请求端点URL替换此处
+      {
+
+      } as ExtendedRequestOptions<unknown>,
+      onDataChunk
+    );
+
+    // 在接收所有数据块后处理整个响应数据（可选）
+    console.log("流式响应完成：", response.data);
+  } catch (error) {
+    console.error("错误：", error.message);
+  }
+})();
+```
+
+请注意，`CannonHttpJS`库的`stream`方法会处理流式响应并为每个数据块调用`onDataChunk`回调。您可以在`onDataChunk`回调中处理数据块，或者在接收到所有数据块后使用整个响应数据，就像示例中所示。
+
+请确保将`"/streaming"`替换为实际的流式请求端点 URL。另外，您可以根据需要添加更多的配置选项。
+
+请记得处理在流式请求过程中可能发生的任何错误，并根据您的具体用例调整示例。
